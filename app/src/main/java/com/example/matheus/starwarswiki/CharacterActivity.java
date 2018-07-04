@@ -42,13 +42,6 @@ public class CharacterActivity extends AppCompatActivity {
         mEyeColor = findViewById(R.id.txtEyeColor);
         mBirthYear = findViewById(R.id.txtBirthYear);
         search();
-        mName.setText(c.getnName());
-        mHeight.setText(String.valueOf(c.getnHeight()));
-        mMass.setText(String.valueOf(c.getnMass()));
-        mBirthYear.setText(c.getnBirthYear());
-        mHairColor.setText(c.getnHairColor());
-        mSkinColor.setText(c.getnSkinColor());
-        mEyeColor.setText(c.getnEyeColor());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -118,6 +111,13 @@ public class CharacterActivity extends AppCompatActivity {
             super.onPostExecute(c);
             if (c != null) {
                 c = newCharacter;
+                mName.setText(c.getnName());
+                mHeight.setText(String.valueOf(c.getnHeight()));
+                mMass.setText(String.valueOf(c.getnMass()));
+                mBirthYear.setText(c.getnBirthYear());
+                mHairColor.setText(c.getnHairColor());
+                mSkinColor.setText(c.getnSkinColor());
+                mEyeColor.setText(c.getnEyeColor());
             } else {
 
                 Toast.makeText(getApplicationContext(), "Buscando...", Toast.LENGTH_LONG).show();

@@ -14,17 +14,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class VehiclesHttp {
 
     //Connect
     private static HttpURLConnection connect(String pName) {
 
+        String newName = pName.replace(" ", "%20");
+
         final int SECONDS = 10000;
 
         try {
-            java.net.URL url = new URL ("https://swapi.co/api/vehicles/?search="+pName);
+            java.net.URL url = new URL ("https://swapi.co/api/vehicles/?search="+newName);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setReadTimeout(10 * SECONDS);
             connection.setConnectTimeout(15 * SECONDS);
@@ -49,25 +50,25 @@ public class VehiclesHttp {
 
     }
 
-    public static ArrayList<Vehicles> readJSONVehicle (JSONObject json) {
+    public static Vehicles readJSONVehicle (JSONObject json) {
 
-        ArrayList<Vehicles> arrayList = new ArrayList<>();
+        Vehicles v = new Vehicles();
 
         try {
             JSONArray results = json.getJSONArray("results");
 
             for (int i = 0; i < 1; i++) {
                 JSONObject jsonVehicle = results.getJSONObject(i);
-                Vehicles v = new Vehicles (
+                Vehicles vehicleObj = new Vehicles (
                         jsonVehicle.getString("name"),
                         jsonVehicle.getString("model"),
-                        jsonVehicle.getString("manufacter"),
+                        jsonVehicle.getString("manufacturer"),
                         jsonVehicle.getString("length"),
                         jsonVehicle.getInt("max_atmosphering_speed"));
-                arrayList.add(v);
+                v = vehicleObj;
             }
 
-            return arrayList;
+            return v;
 
         } catch (JSONException ex) {
             Log.d("JSON", ex.getMessage());
@@ -77,16 +78,16 @@ public class VehiclesHttp {
 
     }
 
-    public static ArrayList<Vehicles> loadVehicle(String pName) {
+    public static Vehicles loadVehicle(String pName) {
 
         try {
             HttpURLConnection connection = connect(pName);
             int response = connection.getResponseCode();
             if (response == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = connection.getInputStream();
-                JSONObject json = new JSONObject(bytesIntoString(inputStream));
-                ArrayList<Vehicles> vehicle = readJSONVehicle(json);
-                return vehicle;
+                JSONObject json = new JSONObject(bytesToString(inputStream));
+                Vehicles v = readJSONVehicle(json);
+                return v;
             }
         } catch (Exception ex) {
             Log.d("ERROR", ex.getMessage());
@@ -95,17 +96,16 @@ public class VehiclesHttp {
         return null;
     }
 
-    private static String bytesIntoString(InputStream inputStream) {
-
+    private static String bytesToString(InputStream inputStream) {
         byte[] buffer = new byte[1024];
-        ByteArrayOutputStream bufferBoss = new ByteArrayOutputStream();
-        int readedBytes;
-
+        ByteArrayOutputStream bufferzao = new ByteArrayOutputStream();
+        int byteslidos;
         try {
+            while ((byteslidos = inputStream.read(buffer)) != -1) {
+                bufferzao.write(buffer, 0, byteslidos);
 
-            while ((readedBytes = inputStream.read(buffer)) != 1) {
-                bufferBoss.write(buffer, 0, readedBytes);
             }
+            return new String(bufferzao.toByteArray(), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

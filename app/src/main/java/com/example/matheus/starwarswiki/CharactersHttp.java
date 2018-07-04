@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class CharactersHttp {
 
@@ -86,7 +85,7 @@ public class CharactersHttp {
             int response = connection.getResponseCode();
             if (response == HttpURLConnection.HTTP_OK) {
                 InputStream inputStream = connection.getInputStream();
-                JSONObject json = new JSONObject(bytesIntoString(inputStream));
+                JSONObject json = new JSONObject(bytesToString(inputStream));
                 Characters c = readJSONCharacter(json);
                 return c;
             }
@@ -97,17 +96,16 @@ public class CharactersHttp {
         return null;
     }
 
-    private static String bytesIntoString(InputStream inputStream) {
-
+    private static String bytesToString(InputStream inputStream) {
         byte[] buffer = new byte[1024];
-        ByteArrayOutputStream bufferBoss = new ByteArrayOutputStream();
-        int readedBytes;
-
+        ByteArrayOutputStream bufferzao = new ByteArrayOutputStream();
+        int byteslidos;
         try {
+            while ((byteslidos = inputStream.read(buffer)) != -1) {
+                bufferzao.write(buffer, 0, byteslidos);
 
-            while ((readedBytes = inputStream.read(buffer)) != 1) {
-                bufferBoss.write(buffer, 0, readedBytes);
             }
+            return new String(bufferzao.toByteArray(), "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }

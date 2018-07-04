@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent (getApplicationContext(), VehicleActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("vehicleName", characterName);
+                    bundle.putString("vehicleName", vehicleName);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

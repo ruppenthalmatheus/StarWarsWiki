@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Star Wars Wiki</string>
+    <string name="height">Altura:</string>
+    <string name="mass">Massa:</string>
+    <string name="hairColor">Cor do Cabelo:</string>
+    <string name="skinColor">Cor da Pele:</string>
+    <string name="eyeColor">Cor dos Olhos:</string>
+    <string name="gender">Gênero:</string>
+    <string name="bYear">Ano de Nascimento:</string>
+    <string name="model">Modelo:</string>
+    <string name="manufacter">Fabricante:</string>
+    <string name="length">Tamanho:</string>
+    <string name="maxSpeed">Velocidade Máxima:</string>
+</resources>

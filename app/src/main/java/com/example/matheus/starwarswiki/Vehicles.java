@@ -18,6 +18,10 @@ public class Vehicles implements Serializable {
         this.nMaxSpeed = nMaxSpeed;
     }
 
+    public Vehicles() {
+
+    }
+
     public String getnName() {
         return nName;
     }
